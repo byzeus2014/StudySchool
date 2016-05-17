@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 该文件用来配置SQL -->
+
+<!--  namespace -->
+<!-- 两种配置SQL的方式 -->
+<!-- 1.通过namespace + statementid的方式，  namespace可以随便配置，建议与mapper xml文件保持一致 -->
+<!-- 2.通过Mapper的方式，                   namespace必须是Mapper Interface的完整包路径名称 -->
+<mapper namespace="pri.zhuby.studyschool.mybatis.dao.mapper.VendorMOTypeMapper">
+    <!-- id是SQL在这个namespace中的唯一标示，resultType使用mybatis配置中的alias定义 -->
+    <select id="selectVendorMOType" resultType="VendorMoType">
+        select * from mdl_vendormotype where motypeid = #{motypeid}
+    </select>
+
+
+    <select id="getMOTypeNameWithMapper" resultType="VendorMoType">
+        select * from mdl_vendormotype where motypeid = #{motypeidInSql}
+    </select>
+</mapper>
