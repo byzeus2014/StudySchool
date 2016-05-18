@@ -18,4 +18,8 @@
     <select id="getMOTypeNameWithMapper" resultType="VendorMoType">
         select * from mdl_vendormotype where motypeid = #{motypeidInSql}
     </select>
+
+    <select id="countVendorMoType" resultType="int">
+        select count(1) from mdl_vendormotype
+    </select>
 </mapper>

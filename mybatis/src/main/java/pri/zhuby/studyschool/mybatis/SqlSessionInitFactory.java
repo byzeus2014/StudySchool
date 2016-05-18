@@ -1,12 +1,12 @@
 package pri.zhuby.studyschool.mybatis;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
 /**
  * SqlSessionFactory是Mybatis的核心，
@@ -54,6 +54,47 @@ public class SqlSessionInitFactory {
      */
     private void initSqlSessionFactory(){
         String xmlConfigFileString = "conf/mybatis-config.xml";
+        initSqlSessionFactory(xmlConfigFileString);
+    }
+
+    /**
+     * 从另一个配置文件中读取出property，
+     * 用来动态填充mybatis配置文件中的变量。
+     * 一般用来把mybatis配置文件中DataSource里面的用户名、密码、url、driver等拆分到单独的property文件中。
+     *
+     * 使用Property也有两种方式：
+     * 1.最简单的是在mybastis的配置文件中补充<properties></>标签
+     *   mybatis会自动读取properties文件中的内容
+     * 2.自己写程序读取出properties文件中的内容，作为参数传递给SqlSessionFactoryBuilder
+     */
+    private void initSqlSessionFactoryByProperty(){
+        //1. 在mybatis配置文件中给出 properties定义，mybatis自己实现读取
+        String xmlConfigFileString = "conf/mybatis-config-property.xml";
+        initSqlSessionFactory( xmlConfigFileString );
+
+        //2. 自己写程序读取properties，作为SqlSessionFactoryBuilder的参数
+//        String xmlConfigFileString = "conf/mybatis-config-property2.xml";
+//        String configPropertiesFileString = "conf/datasource.properties";
+//        InputStream is = null;
+//        try {
+//            is = Resources.getResourceAsStream( xmlConfigFileString );
+//            Properties properties = Resources.getResourceAsProperties( configPropertiesFileString );
+//            sqlSessionFactory = new SqlSessionFactoryBuilder().build( is, properties );
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (is != null) {
+//                    is.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+    }
+
+
+    private void initSqlSessionFactory(String xmlConfigFileString){
         InputStream is = null;
         try {
             is = Resources.getResourceAsStream( xmlConfigFileString );
@@ -70,34 +111,6 @@ public class SqlSessionInitFactory {
             }
         }
     }
-
-    /**
-     * 从另一个配置文件中读取出property，
-     * 用来动态填充mybatis配置文件中的变量。
-     * 一般用来把mybatis配置文件中DataSource里面的用户名、密码、url、driver等拆分到单独的property文件中。
-     */
-    private void initSqlSessionFactoryByProperty(){
-        String xmlConfigFileString = "conf/mybatis-config-property.xml";
-        String configPropertiesFileString = "conf/mybatis-datasource.properties";
-        InputStream is = null;
-        try {
-            is = Resources.getResourceAsStream( xmlConfigFileString );
-            Properties properties = Resources.getResourceAsProperties( configPropertiesFileString );
-            // TODO 补充Property方式的注释
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build( is, properties );
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     /**
      * 单态模式，
      * 带有参数的单态模式 是有问题的！！！
@@ -119,5 +132,13 @@ public class SqlSessionInitFactory {
 
     public SqlSessionFactory getSqlSessionFactory() {
         return sqlSessionFactory;
+    }
+
+    public SqlSession getSqlSession(){
+        if (sqlSessionFactory != null) {
+            sqlSessionFactory.openSession(  false );
+            return sqlSessionFactory.openSession();
+        }
+        return null;
     }
 }

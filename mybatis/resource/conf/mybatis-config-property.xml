@@ -3,6 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <properties resource="conf/datasource.properties">
+        <!-- 这里也可以定义属性 -->
+    </properties>
+
+    <typeAliases>
+        <typeAlias alias="VendorMoType" type="pri.zhuby.studyschool.mybatis.pojo.VendorMOTypePojo" ></typeAlias>
+    </typeAliases>
+
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -16,6 +24,6 @@
     </environments>
 
     <mappers>
-        <mapper resource="org/mybatis/example/BlogMapper.xml"/>
+        <mapper resource="conf/mapper/VendorMotypeMapper.xml"/>
     </mappers>
 </configuration>
