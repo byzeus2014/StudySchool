@@ -34,8 +34,17 @@ public class DaoDemoTest extends TestCase {
         assertEquals( daoDemo.counterVendorMoType(), expectNumber );
     }
 
+    /**
+     * 修改SqlSessionInitFactory中的environment变量的值，
+     * 调用这个测试方法就会返回不同的结果。
+     * @throws Exception
+     */
     public void testCounterVendorMoTypeWithProperty() throws Exception {
-        int expectNumber = 59 ;
-        assertEquals( daoDemo.counterVendorMoTypeWithProperty(), expectNumber );
+
+//        int expectNumber = 59 ;  // develop
+        int expectNumber = 54 ;  // test_env
+        assertEquals(  expectNumber , daoDemo.counterVendorMoTypeWithProperty() );
+
+
     }
 }

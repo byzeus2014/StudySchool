@@ -21,6 +21,17 @@
                 <property name="password" value="${password}"/>
             </dataSource>
         </environment>
+
+        <!-- 如果有多套环境，可以在这里配置。比如一套开发环境，一套测试环境 -->
+        <environment id="test_environment">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${test.url}"/>       <!-- 测试环境的URL -->
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
     </environments>
 
     <mappers>

@@ -25,7 +25,11 @@ public class SqlSessionInitFactory {
     public static final int INIT_TYPE_PROPERTY = 1;
     public static final int INIT_TYPE_JAVABEAN = 2;
 
+//    private String environementid = "development";
+    private String environementid = "test_environment";
+
     private static SqlSessionInitFactory sqlSessionInitFactory = null;  //单态模式
+
 
     /**
      * 统一的构造函数，根据输入的类型，构造不同的sqlsessionfactory出来。
@@ -63,7 +67,7 @@ public class SqlSessionInitFactory {
      * 一般用来把mybatis配置文件中DataSource里面的用户名、密码、url、driver等拆分到单独的property文件中。
      *
      * 使用Property也有两种方式：
-     * 1.最简单的是在mybastis的配置文件中补充<properties></>标签
+     * 1.最简单的是在mybastis的配置文件中补充<properties>标签
      *   mybatis会自动读取properties文件中的内容
      * 2.自己写程序读取出properties文件中的内容，作为参数传递给SqlSessionFactoryBuilder
      */
@@ -79,7 +83,7 @@ public class SqlSessionInitFactory {
 //        try {
 //            is = Resources.getResourceAsStream( xmlConfigFileString );
 //            Properties properties = Resources.getResourceAsProperties( configPropertiesFileString );
-//            sqlSessionFactory = new SqlSessionFactoryBuilder().build( is, properties );
+//            sqlSessionFactory = new SqlSessionFactoryBuilder().build( is, environementid, properties );
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        } finally {
@@ -98,7 +102,7 @@ public class SqlSessionInitFactory {
         InputStream is = null;
         try {
             is = Resources.getResourceAsStream( xmlConfigFileString );
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build( is );
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build( is , environementid );
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -134,11 +138,16 @@ public class SqlSessionInitFactory {
         return sqlSessionFactory;
     }
 
+
     public SqlSession getSqlSession(){
         if (sqlSessionFactory != null) {
-            sqlSessionFactory.openSession(  false );
+            sqlSessionFactory.openSession();
             return sqlSessionFactory.openSession();
         }
         return null;
+    }
+
+    public void setEnvironementid(String environementid) {
+        this.environementid = environementid;
     }
 }

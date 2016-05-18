@@ -18,6 +18,18 @@
                 <property name="password" value="ACROSS_ad_2013"/>
             </dataSource>
         </environment>
+
+        <!-- 如果有多套环境，可以在这里配置。比如一套开发环境，一套测试环境 -->
+        <environment id="test_environment">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="oracle.jdbc.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@//10.110.2.104:1522/acrosspm"/>       <!-- 测试环境的URL -->
+                <property name="username" value="pm4h_ad"/>
+                <property name="password" value="ACROSS_ad_2013"/>
+            </dataSource>
+        </environment>
+
     </environments>
 
     <mappers>

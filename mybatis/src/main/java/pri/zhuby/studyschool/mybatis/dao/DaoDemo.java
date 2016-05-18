@@ -70,7 +70,7 @@ public class DaoDemo {
         try {
             VendorMOTypeMapper mapper = sqlSession.getMapper( VendorMOTypeMapper.class );
             int number = mapper.countVendorMoType();
-            return  number;
+            return number;
         } finally {
             sqlSession.close();
         }
@@ -78,7 +78,6 @@ public class DaoDemo {
 
     /**
      * 测试使用property的sqlsessionfactory
-     * @param motypeID
      * @return
      */
     public int counterVendorMoTypeWithProperty(){
@@ -86,8 +85,7 @@ public class DaoDemo {
                 getSqlSession();
         try {
             VendorMOTypeMapper mapper = sqlSession.getMapper( VendorMOTypeMapper.class );
-            int number = mapper.countVendorMoType();
-            return  number;
+            return mapper.countVendorMoType();
         } finally {
             sqlSession.close();
         }
