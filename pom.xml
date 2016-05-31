@@ -5,6 +5,9 @@
   <groupId>pri.zhuby</groupId>
   <artifactId>studyschool</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>thread</module>
+  </modules>
   <packaging>pom</packaging>
 
   <name>studyschool</name>
